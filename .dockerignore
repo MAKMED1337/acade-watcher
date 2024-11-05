@@ -1,0 +1,8 @@
+env
+.mypy_cache
+.ruff_cache
+.vscode
+**/__pycache__
+backup/*
+.venv
+.git
