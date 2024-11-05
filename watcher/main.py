@@ -41,7 +41,7 @@ def process_new_blocks(db: Session) -> int | None:
         'order': 'asc',
     }
 
-    j = {'message': 'No message ???'}
+    j: dict[str, Any] = {'message': 'No message ???'}
     try:
         resp = requests.get(
             'https://api.nearblocks.io/v1/account/studio.acade.near/txns', params=params, headers=headers, timeout=10
@@ -50,10 +50,10 @@ def process_new_blocks(db: Session) -> int | None:
         resp.raise_for_status()
     except requests.exceptions.Timeout:
         logging.error('API timeout')  # noqa: TRY400
-        return False
+        return None
     except requests.exceptions.HTTPError:
         logging.exception('API error: %s', j['message'])
-        return False
+        return None
 
     db.add_all([parse_transaction(tx) for tx in j['txns']])
     if 'cursor' in j:
