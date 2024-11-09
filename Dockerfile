@@ -8,5 +8,5 @@ COPY poetry.lock pyproject.toml ./
 RUN poetry install
 
 COPY . .
-RUN poetry shell
+CMD poetry shell
 
