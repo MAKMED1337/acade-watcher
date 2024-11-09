@@ -1,6 +1,7 @@
+import pydantic
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy.engine import URL, create_engine
-from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from sqlalchemy.orm import DeclarativeBase, MappedAsDataclass, sessionmaker
 
 
 class DBSettings(BaseSettings):
@@ -24,7 +25,7 @@ connection_url = URL.create(
 )
 
 
-class Base(DeclarativeBase):
+class Base(MappedAsDataclass, DeclarativeBase, dataclass_callable=pydantic.dataclasses.dataclass):
     pass
 
 
